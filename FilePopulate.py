@@ -1,4 +1,4 @@
-for i in range(10000):
+for i in range(100000):
 
     random_string = "Hello\n"
     with open("input.txt", 'a') as write_file:

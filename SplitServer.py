@@ -2,6 +2,8 @@ import itertools
 
 import argparse
 
+import sys
+
 '''
 Beginning of project which will become a file distribution split solution.
 '''
@@ -13,12 +15,21 @@ class SplitUtil:
 
         with open(input_file, 'r') as split_file:
 
+            output = split_file.read().split('\n')
+
+            print(len(output))
+
             file_no = 1
-            for i in range(0, sum(1 for x in open(input_file)), split_length):
-                for line in itertools.islice(split_file, i, i+split_length):
-                    with open(prefix_name+str(file_no), 'a') as output_file:
-                        output_file.write(line)
+            for i in range(0, len(output), split_length):
+
+                out_list = output[i:i+split_length]
+
+                out_files = open(prefix_name+str(file_no),'a')
+
+                for x in out_list:
+                    out_files.write(x+'\n')
                 file_no += 1
+
 
 if __name__ == '__main__':
 
@@ -29,6 +40,5 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     split_inst = SplitUtil()
-
     split_inst.split_file(args.file, int(args.split), args.prefix)
 
